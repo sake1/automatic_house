@@ -1,12 +1,9 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import abstracts.AbstractActor;
 import abstracts.AbstractActorController;
 import actors.AirConditioner;
-import interfaces.Actor;
 import interfaces.ActorController;
 import interfaces.Sensor;
 import sensors.Thermometer;

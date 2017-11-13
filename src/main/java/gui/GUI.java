@@ -6,26 +6,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import abstracts.AbstractActor;
 import abstracts.AbstractSensor;
@@ -37,6 +28,7 @@ import sensors.Anemometer;
 import sensors.Clock;
 import sensors.Thermometer;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame {
 	
 	private static final int ROW_COUNT = 0;
@@ -58,7 +50,7 @@ public class GUI extends JFrame {
 	public void start() {
 		addComponentsToPane(getContentPane());
     	pack();
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
