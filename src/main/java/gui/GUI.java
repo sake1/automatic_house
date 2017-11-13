@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -28,11 +30,12 @@ import sensors.Anemometer;
 import sensors.Clock;
 import sensors.Thermometer;
 
-@SuppressWarnings("serial")
-public class GUI extends JFrame {
+public class GUI extends JFrame implements Observer {
 	
 	private static final int ROW_COUNT = 0;
 	private static final int COL_COUNT = 2;
+	private JSlider airConditionerSlider;
+	private JSlider windowSlider;
 	
 	private JPanel panel;
 	
@@ -94,7 +97,7 @@ public class GUI extends JFrame {
         thermometerSlider.setPaintTicks(true);
         thermometerSlider.setPaintLabels(true);
         thermometerSlider.addChangeListener(new ThermometerListener(thermometerLabel, s));
-        
+       
         panel.add(thermometerLabel);
         panel.add(thermometerSlider);
 	}
@@ -123,7 +126,7 @@ public class GUI extends JFrame {
 		JLabel timeLabel = new JLabel(((AbstractSensor) s).getProperties().getName());
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JTextField timeTextField = new JTextField();
+        JTextField timeTextField = new JTextField("1200");
         timeTextField.setHorizontalAlignment(SwingConstants.CENTER);
         timeTextField.addKeyListener(new ClockListener(timeLabel, timeTextField, s));
         
@@ -132,6 +135,7 @@ public class GUI extends JFrame {
 	}
 	
 	public void addActor(Actor a) {
+		((AbstractActor) a).addObserver(this);
 		if(a instanceof AirConditioner) {
 			addAirConditioner(a);
 		} else if(a instanceof Window) {
@@ -143,7 +147,7 @@ public class GUI extends JFrame {
 		JLabel airConditionerLabel = new JLabel(((AbstractActor) a).getProperties().getName());
         airConditionerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JSlider airConditionerSlider = new JSlider(JSlider.HORIZONTAL, 0, 2, 1);
+        airConditionerSlider = new JSlider(JSlider.HORIZONTAL, 0, 2, 2);
         airConditionerSlider.setPaintLabels(true);
         airConditionerSlider.setPaintTicks(true);
         airConditionerSlider.setMajorTickSpacing(3);
@@ -155,6 +159,7 @@ public class GUI extends JFrame {
         airConditionerLabelTable.put(AirConditioner.HEATER_MODE, new JLabel("HEATER"));
    
         airConditionerSlider.setLabelTable(airConditionerLabelTable);
+        
         airConditionerSlider.setEnabled(false);
         
         panel.add(airConditionerLabel);
@@ -166,7 +171,7 @@ public class GUI extends JFrame {
         windowLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(windowLabel);
         
-        JSlider windowSlider = new JSlider(JSlider.HORIZONTAL,
+        windowSlider = new JSlider(JSlider.HORIZONTAL,
                 0, 1, 1);
         windowSlider.setPaintLabels(true);
         windowSlider.setPaintTicks(true);
@@ -204,4 +209,13 @@ public class GUI extends JFrame {
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+	public void update(Observable arg0, Object arg1) {
+		if(arg0 instanceof Window){
+			windowSlider.setValue(((AbstractActor) arg0).getProperties().getValue());
+		} else{
+			airConditionerSlider.setValue(((AbstractActor) arg0).getProperties().getValue());
+		}
+		
+	}
 }
