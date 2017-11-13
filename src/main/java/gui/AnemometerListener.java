@@ -21,8 +21,8 @@ public class AnemometerListener implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting()) {
-            int windSpeed = (int)source.getValue();
-            anemometerLabel.setText("Wind Speed " + windSpeed);
+            int windSpeed = (int) source.getValue();
+            anemometerLabel.setText(((AbstractSensor) sensor).getProperties().getName() + " scale: " + windSpeed);
             ((AbstractSensor) sensor).getProperties().setValue(windSpeed);
         }    
     }

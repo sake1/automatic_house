@@ -22,7 +22,7 @@ public class ThermometerListener implements ChangeListener {
         JSlider source = (JSlider)e.getSource();
         if (!source.getValueIsAdjusting()) {
             int temperature = (int)source.getValue();
-            thermometerLabel.setText("Thermometer " + temperature);
+            thermometerLabel.setText(((AbstractSensor) sensor).getProperties().getName() + " measure: " + temperature);
             ((AbstractSensor) sensor).getProperties().setValue(temperature);
         }    
     }

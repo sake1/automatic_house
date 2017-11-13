@@ -48,8 +48,12 @@ public class GUI extends JFrame {
         panel = new JPanel();
         panel.setLayout(new GridLayout(ROW_COUNT, COL_COUNT));
     }
-    
-    public void start() {
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public void start() {
     	getContentPane().add(panel, BorderLayout.NORTH);
     	pack();
         setResizable(false);
@@ -191,11 +195,14 @@ public class GUI extends JFrame {
     public static void main(String[] args) {
     	//Create and set up the window.
     	GUI frame = new GUI("Automatic House");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         //Set up the content pane.
+        frame.addTitle("eka");
         frame.addComponentsToPane(frame.getContentPane());
+        
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
