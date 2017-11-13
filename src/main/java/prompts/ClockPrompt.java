@@ -4,13 +4,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import interfaces.PromptInput;
+import sensors.Clock;
 import utils.InvalidDataFormatException;
 import utils.Item;
 
 public class ClockPrompt implements PromptInput {
 
 	private boolean isValidTimeFormat(int time) {
-		return time >= 0 && time < 2400 && time % 100 < 60; 
+		return Clock.MIN_VALUE <= time && time < Clock.MAX_VALUE && time % 100 < 60; 
 	}
 	
 	public void promptInput(Item targetedItem) {

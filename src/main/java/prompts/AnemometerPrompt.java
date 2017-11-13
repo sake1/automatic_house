@@ -4,13 +4,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import interfaces.PromptInput;
+import sensors.Anemometer;
 import utils.InvalidDataFormatException;
 import utils.Item;
 
 public class AnemometerPrompt implements PromptInput {
 
 	private boolean isValidBeaufortScale(int speed) {
-		return 0 <= speed && speed <= 12; 
+		return Anemometer.MIN_VALUE <= speed && speed <= Anemometer.MAX_VALUE; 
 	}
 	
 	public void promptInput(Item targetedItem) {

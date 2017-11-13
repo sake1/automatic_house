@@ -4,13 +4,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import interfaces.PromptInput;
+import sensors.Thermometer;
 import utils.InvalidDataFormatException;
 import utils.Item;
 
 public class ThermometerPrompt implements PromptInput {
 
 	private boolean isValidTemperatureDegree(int temp) {
-		return -273 <= temp && temp <= 100;
+		return Thermometer.MIN_VALUE <= temp && temp <= Thermometer.MAX_VALUE;
 	}
 	
 	public void promptInput(Item targetedItem) {
