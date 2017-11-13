@@ -5,12 +5,17 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import abstracts.AbstractSensor;
+import interfaces.Sensor;
+
 public class ThermometerListener implements ChangeListener {
 
 	private JLabel thermometerLabel;
+	private Sensor sensor;
 	
-	public ThermometerListener(JLabel thermometerLabel){
+	public ThermometerListener(JLabel thermometerLabel, Sensor sensor){
     	this.thermometerLabel = thermometerLabel;
+    	this.sensor = sensor;
     }
     
 	public void stateChanged(ChangeEvent e) {
@@ -18,6 +23,7 @@ public class ThermometerListener implements ChangeListener {
         if (!source.getValueIsAdjusting()) {
             int temperature = (int)source.getValue();
             thermometerLabel.setText("Thermometer " + temperature);
+            ((AbstractSensor) sensor).getProperties().setValue(temperature);
         }    
     }
 }

@@ -193,7 +193,7 @@ public class GUI extends JFrame {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-    	GUI frame = new GUI("GridLayoutDemo");
+    	GUI frame = new GUI("Automatic House");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Set up the content pane.
         frame.addComponentsToPane(frame.getContentPane());
