@@ -11,6 +11,7 @@ import java.awt.event.KeyListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -190,6 +192,11 @@ public class GUI extends JFrame {
 
 	public void addComponentsToPane(final Container pane) {
         pane.add(panel, BorderLayout.NORTH);
+        Dimension d = new Dimension(600,350);
+        pane.setPreferredSize(d);
+        Border padding = BorderFactory.createEmptyBorder(10, -100, 10, 10);
+
+        panel.setBorder(padding);
     }
      
     public static void main(String[] args) {
