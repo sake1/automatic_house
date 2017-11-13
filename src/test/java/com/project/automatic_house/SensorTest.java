@@ -48,10 +48,10 @@ public class SensorTest {
 		m.addSensor(new Thermometer("Thermometer", new ThermometerPrompt()));
 		
 		WindowController w = new WindowController();
-		w.addWindow(new Window("Window", new WindowPrinter()));
+		w.addActor(new Window("Window", new WindowPrinter()));
 		
 		AirConditionerController ac = new AirConditionerController();
-		ac.addAirConditioner(new AirConditioner("Air Conditioner", new AirConditionerPrinter()));
+		ac.addActor(new AirConditioner("Air Conditioner", new AirConditionerPrinter()));
 		
 		m.addSubController(w);
 		m.addSubController(ac);

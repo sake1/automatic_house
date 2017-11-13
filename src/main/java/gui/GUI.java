@@ -50,6 +50,7 @@ public class GUI extends JFrame {
     }
     
     public void start() {
+    	getContentPane().add(panel, BorderLayout.NORTH);
     	pack();
         setResizable(false);
         setVisible(true);
@@ -88,7 +89,7 @@ public class GUI extends JFrame {
         		JSlider.HORIZONTAL,
                 Thermometer.MIN_VALUE, 
                 Thermometer.MAX_VALUE, 
-                ((AbstractSensor) s).getProperties().getValue()
+                0
         );
         thermometerSlider.setMajorTickSpacing(50);
         thermometerSlider.setMinorTickSpacing(25);
@@ -108,7 +109,7 @@ public class GUI extends JFrame {
         		JSlider.HORIZONTAL,
                 Anemometer.MIN_VALUE, 
                 Anemometer.MAX_VALUE, 
-                ((AbstractSensor) s).getProperties().getValue()
+                6
         );
         anemometerSlider.setMajorTickSpacing(4);
         anemometerSlider.setMinorTickSpacing(2);
@@ -124,7 +125,7 @@ public class GUI extends JFrame {
 		JLabel timeLabel = new JLabel(((AbstractSensor) s).getProperties().getName());
         timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        JTextField timeTextField = new JTextField(((AbstractSensor) s).getProperties().getValue());
+        JTextField timeTextField = new JTextField();
         timeTextField.setHorizontalAlignment(SwingConstants.CENTER);
         timeTextField.addKeyListener(new ClockListener(timeLabel, timeTextField, s));
         
@@ -186,14 +187,9 @@ public class GUI extends JFrame {
 	public void addComponentsToPane(final Container pane) {
         pane.add(panel, BorderLayout.NORTH);
     }
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method is invoked from the
-     * event dispatch thread.
-     */
-
-    private static void createAndShowGUI() {
-        //Create and set up the window.
+     
+    public static void main(String[] args) {
+    	//Create and set up the window.
     	GUI frame = new GUI("Automatic House");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Set up the content pane.
@@ -202,68 +198,4 @@ public class GUI extends JFrame {
         frame.pack();
         frame.setVisible(true);
     }
-     
-    public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
-        try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-         
-        //Schedule a job for the event dispatch thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
-
-//    private static void createAndShowGUI() {
-//        //Create and set up the window.
-//    	GUI frame = new GUI("GridLayoutDemo");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        //Set up the content pane.
-//        frame.addComponentsToPane(frame.getContentPane());
-//        //Display the window.
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-//     
-//    public static void main(String[] args) {
-//        /* Use an appropriate Look and Feel */
-//        try {
-//            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//        } catch (UnsupportedLookAndFeelException ex) {
-//            ex.printStackTrace();
-//        } catch (IllegalAccessException ex) {
-//            ex.printStackTrace();
-//        } catch (InstantiationException ex) {
-//            ex.printStackTrace();
-//        } catch (ClassNotFoundException ex) {
-//            ex.printStackTrace();
-//        }
-//        /* Turn off metal's use of bold fonts */
-//        UIManager.put("swing.boldMetal", Boolean.FALSE);
-//         
-//        //Schedule a job for the event dispatch thread:
-//        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
-
 }

@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstracts.AbstractActorController;
 import actors.Window;
 import interfaces.Actor;
 import interfaces.ActorController;
@@ -11,17 +12,7 @@ import sensors.Anemometer;
 import sensors.Clock;
 import utils.Item;
 
-public class WindowController implements ActorController {
-
-	private List<Window> windows;
-	
-	public WindowController() {
-		windows = new ArrayList<Window>();
-	}
-	
-	public void addWindow(Window w) {
-		windows.add(w);
-	}
+public class WindowController extends AbstractActorController implements ActorController {
 
 	public void onUpdatedSensors(List<Sensor> sensors) {
 		// Find sensor with the type of Clock or Anemometer
@@ -44,12 +35,6 @@ public class WindowController implements ActorController {
 		// No sensors indicate that windows should be closed
 		// Proceed to open windows
 		changeActorState(Window.OPEN);
-	}
-	
-	public void changeActorState(int newValue) {
-		for(Window w : windows) {
-			w.getProperties().setValue(newValue);
-		}
 	}
 
 	private boolean isNightTime(int value) {

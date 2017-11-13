@@ -3,23 +3,16 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import abstracts.AbstractActor;
+import abstracts.AbstractActorController;
 import actors.AirConditioner;
+import interfaces.Actor;
 import interfaces.ActorController;
 import interfaces.Sensor;
 import sensors.Thermometer;
 import utils.Item;
 
-public class AirConditionerController implements ActorController {
-
-	private List<AirConditioner> airConditioners;
-	
-	public AirConditionerController() {
-		airConditioners = new ArrayList<AirConditioner>();
-	}
-	
-	public void addAirConditioner(AirConditioner ac) {
-		airConditioners.add(ac);
-	}
+public class AirConditionerController extends AbstractActorController implements ActorController {
 
 	public void onUpdatedSensors(List<Sensor> sensors) {
 		// Find sensor with the type of Thermometer
@@ -51,11 +44,5 @@ public class AirConditionerController implements ActorController {
 
 	private boolean isThermometer(Sensor s) {
 		return s instanceof Thermometer;
-	}
-	
-	public void changeActorState(int newValue) {
-		for(AirConditioner ac : airConditioners) {
-			ac.getProperties().setValue(newValue);
-		}
 	}
 }
