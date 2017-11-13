@@ -8,6 +8,20 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import actors.AirConditioner;
+import actors.Window;
+import controllers.AirConditionerController;
+import controllers.MainController;
+import controllers.WindowController;
+import printers.AirConditionerPrinter;
+import printers.WindowPrinter;
+import prompts.AnemometerPrompt;
+import prompts.ClockPrompt;
+import prompts.ThermometerPrompt;
+import sensors.Anemometer;
+import sensors.Clock;
+import sensors.Thermometer;
+
 public class SensorTest {
 
 	@BeforeClass
