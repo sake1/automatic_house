@@ -6,8 +6,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -30,17 +32,21 @@ import sensors.Anemometer;
 import sensors.Clock;
 import sensors.Thermometer;
 
+@SuppressWarnings("serial")
 public class GUI extends JFrame implements Observer {
 	
-	private static final int ROW_COUNT = 0;
+	private static final int ROW_COUNT = 0; // Unlimited amount of rows are possible
 	private static final int COL_COUNT = 2;
-	private JSlider airConditionerSlider;
-	private JSlider windowSlider;
+	
+	private List<JSlider> airConditionerSliders;
+	private List<JSlider> windowSliders;
 	
 	private JPanel panel;
 	
     public GUI(String title) {
         super(title);
+        airConditionerSliders = new ArrayList<JSlider>();
+        windowSliders = new ArrayList<JSlider>();
         
         panel = new JPanel();
         panel.setLayout(new GridLayout(ROW_COUNT, COL_COUNT));
@@ -147,7 +153,7 @@ public class GUI extends JFrame implements Observer {
 		JLabel airConditionerLabel = new JLabel(((AbstractActor) a).getProperties().getName());
         airConditionerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
-        airConditionerSlider = new JSlider(JSlider.HORIZONTAL, 0, 2, 2);
+        JSlider airConditionerSlider = new JSlider(JSlider.HORIZONTAL, 0, 2, 2);
         airConditionerSlider.setPaintLabels(true);
         airConditionerSlider.setPaintTicks(true);
         airConditionerSlider.setMajorTickSpacing(3);
@@ -159,9 +165,9 @@ public class GUI extends JFrame implements Observer {
         airConditionerLabelTable.put(AirConditioner.HEATER_MODE, new JLabel("HEATER"));
    
         airConditionerSlider.setLabelTable(airConditionerLabelTable);
-        
         airConditionerSlider.setEnabled(false);
         
+        airConditionerSliders.add(airConditionerSlider);
         panel.add(airConditionerLabel);
         panel.add(airConditionerSlider);
 	}
@@ -169,10 +175,8 @@ public class GUI extends JFrame implements Observer {
 	private void addWindow(Actor a) {
 		JLabel windowLabel = new JLabel("Window");
         windowLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        panel.add(windowLabel);
         
-        windowSlider = new JSlider(JSlider.HORIZONTAL,
-                0, 1, 1);
+        JSlider windowSlider = new JSlider(JSlider.HORIZONTAL, 0, 1, 1);
         windowSlider.setPaintLabels(true);
         windowSlider.setPaintTicks(true);
         windowSlider.setMajorTickSpacing(3);
@@ -184,6 +188,9 @@ public class GUI extends JFrame implements Observer {
    
         windowSlider.setLabelTable(windowLabelTable);
         windowSlider.setEnabled(false);
+        
+        windowSliders.add(windowSlider);
+        panel.add(windowLabel);
         panel.add(windowSlider);
 	}
 
@@ -195,27 +202,18 @@ public class GUI extends JFrame implements Observer {
 
         panel.setBorder(padding);
     }
-     
-    public static void main(String[] args) {
-    	//Create and set up the window.
-    	GUI frame = new GUI("Automatic House");
-        
-        //Set up the content pane.
-        frame.addTitle("eka");
-        frame.addComponentsToPane(frame.getContentPane());
-        
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
 
-	public void update(Observable arg0, Object arg1) {
-		if(arg0 instanceof Window){
-			windowSlider.setValue(((AbstractActor) arg0).getProperties().getValue());
-		} else{
-			airConditionerSlider.setValue(((AbstractActor) arg0).getProperties().getValue());
+	public void update(Observable obj, Object arg) {
+		if(obj instanceof Window){
+			updateActors(windowSliders, ((AbstractActor) obj).getProperties().getValue());
+		} else if(obj instanceof AirConditioner){
+			updateActors(airConditionerSliders, ((AbstractActor) obj).getProperties().getValue());
 		}
-		
+	}
+	
+	private void updateActors(List<JSlider> actorSlider, int value) {
+		for(JSlider j : actorSlider) {
+			j.setValue(value);
+		}
 	}
 }

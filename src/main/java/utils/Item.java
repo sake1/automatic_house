@@ -12,7 +12,7 @@ public class Item extends Observable {
 	public Item(String name) {
 		super();
 		this.name = name;
-		this.value = -9999;
+		this.value = DEFAULT;
 	}
 	
 	public String getName() {

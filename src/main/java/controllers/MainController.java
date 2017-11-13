@@ -1,34 +1,22 @@
 package controllers;
 
-import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JFrame;
-
 import abstracts.AbstractActorController;
 import abstracts.AbstractSensor;
-import actors.AirConditioner;
-import actors.Window;
 import gui.GUI;
 import interfaces.Actor;
 import interfaces.ActorController;
 import interfaces.Sensor;
-import printers.AirConditionerPrinter;
-import printers.WindowPrinter;
-import prompts.AnemometerPrompt;
-import prompts.ClockPrompt;
-import prompts.ThermometerPrompt;
-import sensors.Anemometer;
-import sensors.Clock;
-import sensors.Thermometer;
 
 public class MainController implements Observer {
 	
 	public static final int TERMINAL_PROMPT = 1;
 	public static final int GUI_INTERFACE = 2;
+	
 	public static int mode;
 	
 	private List<Sensor> sensors;
@@ -40,6 +28,10 @@ public class MainController implements Observer {
 		this.subControllers = new ArrayList<ActorController>();
 	}
 	
+	public void setMode(int mode) {
+		MainController.mode = mode;
+	}
+
 	public void addSensor(Sensor sensor) {
 		((AbstractSensor) sensor).addObserver(this);
 		sensors.add(sensor);
@@ -56,7 +48,7 @@ public class MainController implements Observer {
 	}
 	
 	public void begin(int mode) {
-		this.mode = mode;
+		setMode(mode);
 		if(mode == TERMINAL_PROMPT) {
 			for(Sensor s : sensors) {
 				s.promptInput();
