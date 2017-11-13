@@ -8,7 +8,7 @@ import interfaces.Actor;
 import interfaces.Printer;
 import utils.Item;
 
-public abstract class AbstractActor implements Actor, Observer {
+public abstract class AbstractActor extends Observable implements Actor, Observer {
 
 	private Item properties;
 	private Printer printer; 
@@ -40,7 +40,8 @@ public abstract class AbstractActor implements Actor, Observer {
 		if(MainController.mode == MainController.TERMINAL_PROMPT) {
 			print();
 		} else if(MainController.mode == MainController.GUI_INTERFACE) {
-			
+			setChanged();
+		    notifyObservers();
 		}
 	}
 }

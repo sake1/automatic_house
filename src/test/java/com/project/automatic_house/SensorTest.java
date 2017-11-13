@@ -2,6 +2,8 @@ package com.project.automatic_house;
 
 import static org.junit.Assert.*;
 
+import java.util.Scanner;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -55,7 +57,9 @@ public class SensorTest {
 		
 		m.addSubController(w);
 		m.addSubController(ac);
-		m.begin();
+		System.out.println("Enter mode: " );
+		Scanner in = new Scanner(System.in);
+//		m.begin();
 	}
 
 }
