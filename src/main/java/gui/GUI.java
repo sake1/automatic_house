@@ -56,7 +56,7 @@ public class GUI extends JFrame {
 	}
 
 	public void start() {
-    	getContentPane().add(panel, BorderLayout.NORTH);
+		addComponentsToPane(getContentPane());
     	pack();
         setResizable(false);
         setVisible(true);

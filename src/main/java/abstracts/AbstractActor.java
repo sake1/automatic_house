@@ -3,6 +3,7 @@ package abstracts;
 import java.util.Observable;
 import java.util.Observer;
 
+import controllers.MainController;
 import interfaces.Actor;
 import interfaces.Printer;
 import utils.Item;
@@ -36,6 +37,10 @@ public abstract class AbstractActor implements Actor, Observer {
 	}
 
 	public void update(Observable arg0, Object arg1) {
-		print();
+		if(MainController.mode == MainController.TERMINAL_PROMPT) {
+			print();
+		} else if(MainController.mode == MainController.GUI_INTERFACE) {
+			
+		}
 	}
 }

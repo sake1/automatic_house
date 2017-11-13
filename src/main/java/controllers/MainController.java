@@ -27,6 +27,10 @@ import sensors.Thermometer;
 
 public class MainController implements Observer {
 	
+	public static final int TERMINAL_PROMPT = 1;
+	public static final int GUI_INTERFACE = 2;
+	public static int mode;
+	
 	private List<Sensor> sensors;
 	private List<ActorController> subControllers;
 	private GUI gui;
@@ -51,42 +55,26 @@ public class MainController implements Observer {
 		}
 	}
 	
-	public void begin() {
-		gui = new GUI("Automatic House");
-		gui.addTitle("Sensors");
-		for(Sensor s : sensors) {
-			gui.addSensor(s);
-		}
-		gui.addTitle("Actors");
-		for(ActorController ac : subControllers) {
-			List<Actor> actors = ((AbstractActorController) ac).getActors();
-			for(Actor a : actors) {
-				gui.addActor(a);
+	public void begin(int mode) {
+		this.mode = mode;
+		if(mode == TERMINAL_PROMPT) {
+			for(Sensor s : sensors) {
+				s.promptInput();
 			}
+		} else if(mode == GUI_INTERFACE) {
+			gui = new GUI("Automatic House");
+			gui.addTitle("Sensors");
+			for(Sensor s : sensors) {
+				gui.addSensor(s);
+			}
+			gui.addTitle("Actors");
+			for(ActorController ac : subControllers) {
+				List<Actor> actors = ((AbstractActorController) ac).getActors();
+				for(Actor a : actors) {
+					gui.addActor(a);
+				}
+			}
+			gui.start();
 		}
-		gui.start();
-		
-		gui.addComponentsToPane(gui.getContentPane());
-		gui.pack();
-		gui.setResizable(false);
-		gui.setVisible(true);
-		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-	
-	public static void main(String[] args) {
-		MainController m = new MainController();
-		m.addSensor(new Clock("Clock", new ClockPrompt()));
-		m.addSensor(new Anemometer("Anemometer", new AnemometerPrompt()));
-		m.addSensor(new Thermometer("Thermometer", new ThermometerPrompt()));
-		
-		WindowController w = new WindowController();
-		w.addActor(new Window("Window", new WindowPrinter()));
-		
-		AirConditionerController ac = new AirConditionerController();
-		ac.addActor(new AirConditioner("Air Conditioner", new AirConditionerPrinter()));
-		
-		m.addSubController(w);
-		m.addSubController(ac);
-		m.begin();
 	}
 }
