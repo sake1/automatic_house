@@ -42,6 +42,7 @@ public abstract class AbstractActor extends Observable implements Actor, Observe
 		} else if(MainController.mode == MainController.GUI_INTERFACE) {
 			setChanged();
 		    notifyObservers();
+		    clearChanged();
 		}
 	}
 }

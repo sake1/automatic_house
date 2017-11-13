@@ -1,11 +1,9 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import abstracts.AbstractActorController;
 import actors.Window;
-import interfaces.Actor;
 import interfaces.ActorController;
 import interfaces.Sensor;
 import sensors.Anemometer;

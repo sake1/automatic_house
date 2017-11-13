@@ -3,7 +3,6 @@ package abstracts;
 import java.util.ArrayList;
 import java.util.List;
 
-import actors.AirConditioner;
 import interfaces.Actor;
 import interfaces.ActorController;
 import interfaces.Sensor;
