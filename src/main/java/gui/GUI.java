@@ -28,6 +28,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.PlainDocument;
 
 import abstracts.AbstractActor;
 import abstracts.AbstractSensor;
@@ -38,6 +39,7 @@ import interfaces.Sensor;
 import sensors.Anemometer;
 import sensors.Clock;
 import sensors.Thermometer;
+import utils.JTextFieldLimit;
 
 public class GUI extends JFrame implements Observer {
 	
@@ -141,6 +143,8 @@ public class GUI extends JFrame implements Observer {
         
         panel.add(timeLabel);
         panel.add(timeTextField);
+      
+        timeTextField.setDocument(new JTextFieldLimit(4));
 	}
 	
 	public void addActor(Actor a) {
@@ -225,6 +229,7 @@ public class GUI extends JFrame implements Observer {
 		} else{
 			airConditionerSlider.setValue(((AbstractActor) arg0).getProperties().getValue());
 		}
-		
 	}
 }
+
+
